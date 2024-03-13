@@ -47,3 +47,10 @@ class typing_speed_test:
 
         screen.blit(text, text_rect)
         pygame.display.update()
+
+    #Method for retreiving a random sentence from the txt file (dictionary.txt)
+    def get_sentence(self):
+        file = open(r"resources/dictionary.txt").read()
+        sentence = file.split("\n")
+        random_sentence = random.choice(sentence)
+        return random_sentence
