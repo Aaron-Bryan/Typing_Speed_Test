@@ -23,3 +23,17 @@ class typing_speed_test:
         self.head_color = (255,213,102)
         self.text_color = (240,240,240)
         self.results_color = (255,70,70)
+
+        #Initialize pygme
+        pygame.init()
+
+        #Load the images to draw
+        self.startup_img = pygame.image.load(r"resources/startup.jpg")
+        self.startup_img = pygame.transform.scale(self.startup_img, (self.width, self.height))
+
+        self.background = pygame.image.load(r"resources/background.jpg")
+        self.background = pygame.transform.scale(self.background, (self.width, self.height))
+
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        pygame.display.set_caption("Typing Speed test")
+
