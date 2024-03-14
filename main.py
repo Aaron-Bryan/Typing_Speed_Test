@@ -67,7 +67,7 @@ class typing_speed_test:
 
             #Calculate the accuracy of the user
             for char_ctr, char in enumerate(self.word):
-                if self.input_text[char_ctr] == char:
+                if (self.input_text[char_ctr] == char):
                     count = count + 1
                 """try:
                     if self.input_text[char_ctr] == char:
@@ -117,7 +117,25 @@ class typing_speed_test:
             self.draw_text(self.screen, self.input_text, 274, 26, (250, 250, 250))
             pygame.display.update()
 
+            #Events
+            for event in pygame.event.get():
+                if (event.type == QUIT):
+                    self.running = False
+                    sys.exit()
 
+                elif (event.type == pygame.MOUSEBUTTONDOWN):
+                    #Get position of your cursor
+                    x_mouse_pos, y_mouse_pos = pygame.mouse.get_pos()
+
+                    #Input text field position
+                    if (x_mouse_pos >= 50 and x_mouse_pos <= 650 and y_mouse_pos >= 250 and y_mouse_pos <= 300):
+                        self.active = True
+                        self.input_text = ''
+                        self.starting_time = time.time()
+
+                    #Reset button position
+                    if (x_mouse_pos >= 310 and x_mouse_pos <= 510 and y_mouse_pos >= 390 and self.end):
+                        self.reset()
 
 
     def reset(self):
