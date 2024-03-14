@@ -18,9 +18,7 @@ class typing_speed_test:
         self.end_time = 0
         self.typing_accuracy = "0%"
         self.wpm = 0
-        self.time_result = "Time: 0"
-        self.accuracy_result = "Accuracy: 0"
-        self.wpm_result = "WPM: 0"
+        self.results = 'Time:0 Accuracy:0 % Wpm:0 '
         self.end = False
         self.head_color = (255, 213, 102)
         self.text_color = (240, 240, 240)
@@ -86,9 +84,7 @@ class typing_speed_test:
             print(self.end_time)
 
             #Placeholder text for the results
-            self.time_result = "Time: " + str(round(self.end_time)) + " secs"
-            self.accuracy_result = "Accuracy: " + str(round(self.typing_accuracy)) + "%"
-            self.wpm_result = "WPM: " + str(round(self.wpm))
+            self.results = 'Time:' + str(round(self.end_time)) + " secs" + "Accuracy:" + str(round(self.typing_accuracy)) + "% " + "WPM: " + str(round(self.wpm))
 
             #Draw the image that'll serve as a reset button
             self.icon_img = pygame.image.load(r"resources/icon.png")
@@ -96,9 +92,7 @@ class typing_speed_test:
             screen.blit(self.icon_img, (self.width / 75, self.height - 140))
             self.draw_text(screen, "Reset" ,self.height - 70, 26, (100, 100, 100))
 
-            print(self.time_result)
-            print(self.accuracy_result)
-            print(self.wpm_result)
+
 
             pygame.display.update()
 
@@ -137,6 +131,21 @@ class typing_speed_test:
                     if (x_mouse_pos >= 310 and x_mouse_pos <= 510 and y_mouse_pos >= 390 and self.end):
                         self.reset()
 
+                        x_mouse_pos, y_mouse_pos = pygame.mouse.get_pos()
+
+                elif event.type == pygame.KEYDOWN:
+                    if ((self.active == True)  and (self.end == False)):
+                        if (event.key == pygame.K_RETURN):
+                            print(self.input_text)
+                            self.show_results(self.screen)
+                            self.draw_text(self.screen, self.results, 350, 28, self.results_color)
+                            self.end = True
+
+                        elif (event.key == pygame.K_BACKSPACE):
+                            self.input_text = self.input_text[:-1]
+
+            pygame.display.update()
+        clock.tick(60)
 
     def reset(self):
         pass
