@@ -147,6 +147,7 @@ class typing_speed_test:
             pygame.display.update()
         clock.tick(60)
 
+
     def reset(self):
         pass
 
