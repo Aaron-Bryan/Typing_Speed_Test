@@ -18,7 +18,10 @@ class typing_speed_test:
         self.end_time = 0
         self.typing_accuracy = "0%"
         self.wpm = 0
-        self.results = "Time: 0  Accuracy: 0%  Wpm: 0"
+        #self.results = "Time: 0  Accuracy: 0%  Wpm: 0"
+        self.time_result = "Time: 0"
+        self.accuracy_result = "Accuracy: 0"
+        self.wpm_result = "WPM: 0"
         self.end = False
         self.head_color = (255,213,102)
         self.text_color = (240,240,240)
@@ -32,7 +35,7 @@ class typing_speed_test:
         self.startup_img = pygame.transform.scale(self.startup_img, (self.width, self.height))
 
         self.background = pygame.image.load(r"resources/background.jpg")
-        self.background = pygame.transform.scale(self.background, (self.width, self.height))
+        self.background = pygame.transform.scale(self.background, (500, 700))
 
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Typing Speed test")
@@ -54,3 +57,55 @@ class typing_speed_test:
         sentence = file.split("\n")
         random_sentence = random.choice(sentence)
         return random_sentence
+
+    #Method for showing the results of the test
+    def show_results(self, screen):
+
+        if(self.end == False):
+
+            #Calculate the time of the user
+            self.end_time = time.time() - self.starting_time
+
+            #Calculate the accuracy of the user
+            for char_ctr, char in enumerate(self.word):
+                if self.input_text[char_ctr] == char:
+                    count = count + 1
+                """try:
+                    if self.input_text[char_ctr] == char:
+                        count = count + 1
+                except:
+                    pass"""
+
+                self.typing_accuracy = count/len(self.word) * 100
+
+            #Calcute the wpm of the user
+            word_count = len(self.input_text) / 5
+            self.wpm = word_count / (self.end_time / 60)
+
+            self.end = True
+            print(self.end_time)
+
+            #Placeholder text for the results
+            self.time_result = "Time: " + str(round(self.end_time)) + " secs"
+            self.accuracy_result = "Accuracy: " + str(round(self.typing_accuracy)) + "%"
+            self.wpm_result = "WPM: " + str(round(self.wpm))
+
+            #Draw the image that'll serve as a reset button
+            self.icon_img = pygame.image.load(r"resources/icon.png")
+            self.icon_img = pygame.transform.scale(self.icon_img, (150, 150))
+            screen.blit(self.icon_img, (self.width / 75, self.height - 140))
+            self.draw_text(screen, "Reset" ,self.height - 70, 26, (100,100,100))
+
+            print(self.time_result)
+            print(self.accuracy_result)
+            print(self.wpm_result)
+
+            pygame.display.update()
+
+
+    #Main Methods
+    def run(self):
+        pass
+
+    def reset(self):
+        pass
