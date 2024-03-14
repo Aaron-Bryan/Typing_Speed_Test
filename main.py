@@ -18,14 +18,13 @@ class typing_speed_test:
         self.end_time = 0
         self.typing_accuracy = "0%"
         self.wpm = 0
-        #self.results = "Time: 0  Accuracy: 0%  Wpm: 0"
         self.time_result = "Time: 0"
         self.accuracy_result = "Accuracy: 0"
         self.wpm_result = "WPM: 0"
         self.end = False
-        self.head_color = (255,213,102)
-        self.text_color = (240,240,240)
-        self.results_color = (255,70,70)
+        self.head_color = (255, 213, 102)
+        self.text_color = (240, 240, 240)
+        self.results_color = (255, 70, 70)
 
         #Initialize pygme
         pygame.init()
@@ -79,6 +78,7 @@ class typing_speed_test:
                 self.typing_accuracy = count/len(self.word) * 100
 
             #Calcute the wpm of the user
+            #self.wpm = len(self.input_text) * 60 / (5 * self.total_time)
             word_count = len(self.input_text) / 5
             self.wpm = word_count / (self.end_time / 60)
 
@@ -94,7 +94,7 @@ class typing_speed_test:
             self.icon_img = pygame.image.load(r"resources/icon.png")
             self.icon_img = pygame.transform.scale(self.icon_img, (150, 150))
             screen.blit(self.icon_img, (self.width / 75, self.height - 140))
-            self.draw_text(screen, "Reset" ,self.height - 70, 26, (100,100,100))
+            self.draw_text(screen, "Reset" ,self.height - 70, 26, (100, 100, 100))
 
             print(self.time_result)
             print(self.accuracy_result)
@@ -105,7 +105,23 @@ class typing_speed_test:
 
     #Main Methods
     def run(self):
-        pass
+        self.reset()
+
+        self.running = True
+        while(self.running == True):
+            clock = pygame.time.Clock()
+            self.screen.fill((0, 0, 0), (50, 250, 650, 50))
+            pygame.draw.rect(self.screen, self.head_color, (50, 250, 650, 50), 2)
+
+            #Update the text in respect to the user's input
+            self.draw_text(self.screen, self.input_text, 274, 26, (250, 250, 250))
+            pygame.display.update()
+
+
+
 
     def reset(self):
         pass
+
+
+typing_speed_test().run()
