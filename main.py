@@ -38,7 +38,6 @@ class typing_speed_test:
         pygame.display.set_caption("Typing Speed test")
 
     #Methods
-
     #Method for drawing the text on the screen
     def draw_text(self, screen, message, y_pos, font_size, color):
         font = pygame.font.Font(None, font_size)
@@ -186,4 +185,4 @@ class typing_speed_test:
         pygame.display.update()
 
 
-typing_speed_test.run()
+typing_speed_test().run()
