@@ -10,7 +10,7 @@ class typing_speed_test:
     def __init__(self):
         self.width = 750
         self.height = 500
-        self.reset = True
+        self.reset_state = True
         self.active = False
         self.input_text = ""
         self.word = ""
@@ -99,7 +99,7 @@ class typing_speed_test:
 
     #Main Methods
     def run(self):
-        self.reset()
+        self.reset_state()
 
         self.running = True
         while(self.running == True):
@@ -129,7 +129,7 @@ class typing_speed_test:
 
                     #Reset button position
                     if (x_mouse_pos >= 310 and x_mouse_pos <= 510 and y_mouse_pos >= 390 and self.end):
-                        self.reset()
+                        self.reset_state()
 
                         x_mouse_pos, y_mouse_pos = pygame.mouse.get_pos()
 
@@ -153,6 +153,31 @@ class typing_speed_test:
 
         pygame.display.update()
         time.sleep(1)
+
+        #Refresh the variables to initial state
+        self.reset_state = False
+        self.end = False
+
+        self.input_text = ""
+        self.word = ""
+        self.starting_time = 0
+        self.end_time = 0
+        self.wpm = 0
+
+        #Get Random sentence again
+        self.word = self.get_sentence()
+        if (self.word == False):
+            self.reset_state()
+
+        #Heading
+        self.screen.fill((0, 0, 0))
+        self.screen.blit(self.bg, (0, 0))
+
+        head_text = "Typing Speed Test"
+
+        self.draw_text(self.screen, head_text, 80, 80, self.head_color)
+
+
 
 
 typing_speed_test().run()
