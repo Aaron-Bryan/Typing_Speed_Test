@@ -99,7 +99,7 @@ class typing_speed_test:
 
     #Main Methods
     def run(self):
-        self.reset_state()
+        self.reset()
 
         self.running = True
         while(self.running == True):
@@ -177,7 +177,13 @@ class typing_speed_test:
 
         self.draw_text(self.screen, head_text, 80, 80, self.head_color)
 
+        #Draw the text area
+        pygame.draw.rect(self.screen, (255, 192, 25), (50, 250, 650, 50), 2)
+
+        #Draw the head_text
+        self.draw_text(self.screen, self.word, 200, 28, self.text_color)
+
+        pygame.display.update()
 
 
-
-typing_speed_test().run()
+typing_speed_test.run()
