@@ -63,36 +63,35 @@ class typing_speed_test:
             self.end_time = time.time() - self.starting_time
 
             #Calculate the accuracy of the user
-            for char_ctr, char in enumerate(self.word):
-                if (self.input_text[char_ctr] == char):
-                    count = count + 1
-                """try:
-                    if self.input_text[char_ctr] == char:
+            count = 0
+            for i, c in enumerate(self.word):
+                try:
+                    if self.input_text[i] == c:
                         count = count + 1
                 except:
-                    pass"""
+                    pass
+            self.typing_accuracy = count / len(self.word) * 100
 
-                self.typing_accuracy = count/len(self.word) * 100
+            #Calculate the wpm of the user
+            #self.wpm = len(self.input_text) * 60 / (5 * self.end_time)
 
-            #Calcute the wpm of the user
-            #self.wpm = len(self.input_text) * 60 / (5 * self.total_time)
             word_count = len(self.input_text) / 5
-            self.wpm = word_count / (self.end_time / 60)
+            self.wpm = word_count / (self.end_time / 6)
 
             self.end = True
             print(self.end_time)
 
             #Placeholder text for the results
-            self.results = 'Time:' + str(round(self.end_time)) + " secs" + "Accuracy:" + str(round(self.typing_accuracy)) + "% " + "WPM: " + str(round(self.wpm))
+            self.results = 'Time:' + str(round(self.end_time)) + " secs Accuracy:" + str(round(self.typing_accuracy)) + "%" + '   WPM: ' + str(round(self.wpm))
 
-            #Draw the image that'll serve as a reset button
-            self.icon_img = pygame.image.load(r"resources/icon.png")
-            self.icon_img = pygame.transform.scale(self.icon_img, (150, 150))
-            screen.blit(self.icon_img, (self.width / 75, self.height - 140))
+            #Draw the image that will serve as a reset button
+            self.reset_img = pygame.image.load(r"resources/icon.png")
+            self.reset_img = pygame.transform.scale(self.reset_img, (150, 150))
+
+            screen.blit(self.reset_img, (self.width / 2 - 75, self.height - 140))
             self.draw_text(screen, "Reset", self.height - 70, 26, (100, 100, 100))
 
-
-
+            print(self.results)
             pygame.display.update()
 
 
@@ -101,47 +100,46 @@ class typing_speed_test:
         self.reset()
 
         self.running = True
-        while(self.running == True):
+        while (self.running):
             clock = pygame.time.Clock()
             self.screen.fill((0, 0, 0), (50, 250, 650, 50))
             pygame.draw.rect(self.screen, self.head_color, (50, 250, 650, 50), 2)
-
-            #Update the text in respect to the user's input
+            # update the text of user input
             self.draw_text(self.screen, self.input_text, 274, 26, (250, 250, 250))
             pygame.display.update()
-
-            #Events
             for event in pygame.event.get():
-                if (event.type == QUIT):
+                if event.type == QUIT:
                     self.running = False
                     sys.exit()
-
-                elif (event.type == pygame.MOUSEBUTTONDOWN):
-                    #Get position of your cursor
-                    x_mouse_pos, y_mouse_pos = pygame.mouse.get_pos()
-
-                    #Input text field position
-                    if (x_mouse_pos >= 50 and x_mouse_pos <= 650 and y_mouse_pos >= 250 and y_mouse_pos <= 300):
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    x, y = pygame.mouse.get_pos()
+                    # position of input box
+                    if (x >= 50 and x <= 650 and y >= 250 and y <= 300):
                         self.active = True
                         self.input_text = ''
-                        self.starting_time = time.time()
+                        self.time_start = time.time()
+                        # position of reset box
+                    if (x >= 310 and x <= 510 and y >= 390 and self.end):
+                        self.reset()
+                        x, y = pygame.mouse.get_pos()
 
-                    #Reset button position
-                    if (x_mouse_pos >= 310 and x_mouse_pos <= 510 and y_mouse_pos >= 390 and self.end):
-                        self.reset_state()
-
-                        x_mouse_pos, y_mouse_pos = pygame.mouse.get_pos()
 
                 elif event.type == pygame.KEYDOWN:
-                    if ((self.active == True)  and (self.end == False)):
-                        if (event.key == pygame.K_RETURN):
+                    if self.active and not self.end:
+                        if event.key == pygame.K_RETURN:
                             print(self.input_text)
                             self.show_results(self.screen)
+                            print(self.results)
                             self.draw_text(self.screen, self.results, 350, 28, self.results_color)
                             self.end = True
 
-                        elif (event.key == pygame.K_BACKSPACE):
+                        elif event.key == pygame.K_BACKSPACE:
                             self.input_text = self.input_text[:-1]
+                        else:
+                            try:
+                                self.input_text += event.unicode
+                            except:
+                                pass
 
             pygame.display.update()
         clock.tick(60)
