@@ -32,7 +32,7 @@ class typing_speed_test:
         self.startup_img = pygame.transform.scale(self.startup_img, (self.width, self.height))
 
         self.background = pygame.image.load(r"resources/background.jpg")
-        self.background = pygame.transform.scale(self.background, (500, 700))
+        self.background = pygame.transform.scale(self.background, (self.width, self.height))
 
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Typing Speed test")
@@ -89,7 +89,7 @@ class typing_speed_test:
             self.icon_img = pygame.image.load(r"resources/icon.png")
             self.icon_img = pygame.transform.scale(self.icon_img, (150, 150))
             screen.blit(self.icon_img, (self.width / 75, self.height - 140))
-            self.draw_text(screen, "Reset" ,self.height - 70, 26, (100, 100, 100))
+            self.draw_text(screen, "Reset", self.height - 70, 26, (100, 100, 100))
 
 
 
@@ -148,7 +148,7 @@ class typing_speed_test:
 
 
     def reset(self):
-        self.screen.blit(self.icon_img, (0,0))
+        self.screen.blit(self.startup_img, (0,0))
 
         pygame.display.update()
         time.sleep(1)
@@ -170,7 +170,7 @@ class typing_speed_test:
 
         #Heading
         self.screen.fill((0, 0, 0))
-        self.screen.blit(self.bg, (0, 0))
+        self.screen.blit(self.background, (0, 0))
 
         head_text = "Typing Speed Test"
 
