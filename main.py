@@ -149,7 +149,10 @@ class typing_speed_test:
 
 
     def reset(self):
-        pass
+        self.screen.blit(self.icon_img, (0,0))
+
+        pygame.display.update()
+        time.sleep(1)
 
 
 typing_speed_test().run()
