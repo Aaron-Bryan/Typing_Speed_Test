@@ -92,7 +92,7 @@ class typing_speed_test:
 
     #Main Methods
     def run(self):
-        self.reset_game()
+        self.reset()
 
         self.running = True
         while (self.running):
@@ -120,7 +120,7 @@ class typing_speed_test:
 
                     #Reset button position
                     if(mouse_pos_x >= 310 and mouse_pos_x <= 510 and mouse_pos_y >= 390 and self.end):
-                        self.reset_game()
+                        self.reset()
                         mouse_pos_x, mouse_pos_y = pygame.mouse.get_pos()
 
 
@@ -145,7 +145,7 @@ class typing_speed_test:
 
         clock.tick(60)
 
-    def reset_game(self):
+    def reset(self):
         self.screen.blit(self.startup, (0, 0))
 
         pygame.display.update()
@@ -164,7 +164,7 @@ class typing_speed_test:
         #Get random sentence again
         self.word = self.get_sentence()
         if(self.word == False):
-            self.reset_game()
+            self.reset()
 
         #Draw the header again
         self.screen.fill((0, 0, 0))
