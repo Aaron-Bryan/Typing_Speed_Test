@@ -1,3 +1,6 @@
-To use the program you would need to have python and pygame installed and run it.
+Hello, Thank you for visiting this repo
+To use the 2D_Shooter.py you must have these libraries installed:
+pygame
 
-To install pygame simply input (pip install pygame) on your terminal
+Ex:
+pip install pygame
